@@ -374,3 +374,67 @@ main {
   .business-card { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
   .site-header { break-after: avoid; padding: 1rem; }
 }
+
+/* ===== Industry Filter Toggle (Mobile) ===== */
+.filter-toggle {
+  display: none;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border: 1.5px solid var(--light-gray);
+  border-radius: 6px;
+  background: var(--white);
+  font-size: 0.85rem;
+  font-family: inherit;
+  font-weight: 600;
+  color: var(--dark-gray);
+  cursor: pointer;
+  transition: all 0.15s;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.filter-toggle:hover {
+  border-color: var(--miami-red-light);
+}
+
+.filter-toggle-badge {
+  background: var(--miami-red);
+  color: var(--white);
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 100px;
+  font-weight: 600;
+}
+
+.filter-toggle-arrow {
+  transition: transform 0.2s;
+  color: var(--medium-gray);
+}
+
+.filter-toggle[aria-expanded="true"] .filter-toggle-arrow {
+  transform: rotate(180deg);
+}
+
+/* Only show toggle and hide filters behind it on mobile */
+@media (max-width: 768px) {
+  .filter-toggle {
+    display: flex;
+  }
+  .industry-filters {
+    display: flex !important;
+    max-height: 500px;
+    overflow: hidden;
+    transition: max-height 0.25s ease, opacity 0.2s ease, margin 0.2s ease;
+    opacity: 1;
+    margin-top: 0.5rem;
+  }
+  .industry-filters.collapsed {
+    max-height: 0 !important;
+    opacity: 0;
+    margin-top: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+}

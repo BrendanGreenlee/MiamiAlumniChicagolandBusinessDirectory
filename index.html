@@ -29,6 +29,11 @@
       <div class="search-wrapper">
         <input type="text" id="searchInput" placeholder="Search by name, industry, or location…" aria-label="Search businesses">
       </div>
+      <button class="filter-toggle" id="filterToggle" aria-expanded="true" onclick="toggleFilters()">
+        <span class="filter-toggle-label">Industry</span>
+        <span class="filter-toggle-badge" id="filterBadge">All</span>
+        <svg class="filter-toggle-arrow" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1l5 5 5-5" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      </button>
       <div class="industry-filters" id="industryFilters">
         <button class="industry-btn active" data-filter="all">All</button>
       </div>
@@ -267,7 +272,14 @@
 
     // ─── Initial Render ───────────────────────────────────────────────
     render();
-  </script>
+  
+function toggleFilters() {
+  const container = document.getElementById('industryFilters');
+  const toggle = document.getElementById('filterToggle');
+  const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+  container.classList.toggle('collapsed', isOpen);
+  toggle.setAttribute('aria-expanded', !isOpen);
+}</script>
 
 </body>
 </html>
