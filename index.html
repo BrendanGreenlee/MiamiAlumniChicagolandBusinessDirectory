@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Miami Alumni Chicagoland Business Directory</title>
+  <meta name="description" content="A directory of businesses owned by Miami University (OH) alumni in the Chicagoland area.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='4' fill='%23C41E3A'/%3E%3Ctext x='16' y='22' font-family='Georgia,serif' font-size='22' font-weight='bold' fill='white' text-anchor='middle'%3EM%3C/text%3E%3C/svg%3E">
+</head>
+<body>
+
+  <!-- ===== Header ===== -->
+  <header class="site-header">
+    <h1>Miami Alumni<br>Chicagoland Business Directory</h1>
+    <p class="subtitle">Supporting Miami University alumni–owned businesses in the greater Chicago area</p>
+    <span class="miami-badge">Love &amp; Honor 🤍❤️</span>
+  </header>
+
+  <!-- ===== Filter Bar ===== -->
+  <nav class="filter-bar" role="navigation" aria-label="Filter businesses">
+    <div class="filter-bar-inner">
+      <div class="stats">
+        <strong id="totalCount">11</strong> businesses
+      </div>
+      <div class="search-wrapper">
+        <input type="text" id="searchInput" placeholder="Search by name, industry, or location…" aria-label="Search businesses">
+      </div>
+      <div class="industry-filters" id="industryFilters">
+        <button class="industry-btn active" data-filter="all">All</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== Directory Grid ===== -->
+  <main>
+    <div class="directory-grid" id="directoryGrid"></div>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer">
+    <div>Miami University Alumni Chicagoland Chapter</div>
+    <div><a href="https://www.miamialum.org" target="_blank" rel="noopener">miamialum.org</a></div>
+    <div class="footer-love">Made with Love &amp; Honor for the Miami community</div>
+  </footer>
+
+  <!-- ===== Data & Script ===== -->
+  <script>
+    // ─── Business Data ────────────────────────────────────────────────
+    // Sorted alphabetically by company name
+    const businesses = [
+      {
+        company: "Centered Therapy Chicago",
+        alumni: "Bianka Hardin",
+        role: "Owner",
+        industry: "Mental Health Care",
+        location: "Chicago, IL",
+        address: "1507 W. Lawrence, Chicago, IL",
+        description: "Mental health practice providing individual, couples, and family therapy services.",
+        phone: "(773) 569-1426",
+        email: null,
+        website: null
+      },
+      {
+        company: "Chicago Pelvic Health and Wellness",
+        alumni: "Jana Fronda",
+        role: "Owner/Founder",
+        industry: "Health Wellness and Fitness",
+        location: "Wheaton, IL",
+        address: "301 S County Farm Rd Suite H, Wheaton, IL",
+        description: "Specialized pelvic floor physical therapy clinic dedicated to women's health and wellness.",
+        phone: "(773) 219-2749",
+        email: null,
+        website: null
+      },
+      {
+        company: "Garrett Consulting",
+        alumni: "Steve Garrett",
+        role: "Owner/Founder",
+        industry: "Human Resources",
+        location: "Chicago, IL",
+        address: "5442 N Ashland Ave Apt 1, Chicago, IL",
+        description: "Leadership development consulting since the late 1980s — executive coaching, leadership training, and assessments.",
+        phone: "(312) 208-0636",
+        email: null,
+        website: null
+      },
+      {
+        company: "GLP Capital Partners",
+        alumni: "Britton Leigh",
+        role: "Partner",
+        industry: "Investment Management",
+        location: "Chicago, IL",
+        address: "10 S. Wacker, Chicago, IL",
+        description: "Global alternative asset manager specializing in logistics, self-storage, and data center assets.",
+        phone: null,
+        email: null,
+        website: null
+      },
+      {
+        company: "John Tyler Carlson State Farm Agency",
+        alumni: "John Carlson",
+        role: "Owner/Founder",
+        industry: "Insurance",
+        location: "Evanston, IL",
+        address: "829 Main St, Evanston, IL",
+        description: "State Farm Agency providing insurance and financial services to the Evanston community.",
+        phone: "(847) 869-2336",
+        email: null,
+        website: null
+      },
+      {
+        company: "The Lakefront Restaurant",
+        alumni: "Emily LeFevers",
+        role: "Owner",
+        industry: "Food &amp; Beverages",
+        location: "Chicago, IL",
+        address: "2401 N Lake Shore Dr, Chicago, IL (Theater on the Lake building)",
+        description: "Upscale tavern with indoor/outdoor seating offering a premier lakeside dining experience.",
+        phone: "(312) 414-1313",
+        email: null,
+        website: null
+      },
+      {
+        company: "Millennium Hall",
+        alumni: "Brendan Greenlee",
+        role: "Owner",
+        industry: "Food &amp; Beverages",
+        location: "Chicago, IL",
+        address: "11 N Michigan Ave, Chicago, IL (underneath Cloud Gate)",
+        description: "Collective eatery offering diverse food options in the heart of Millennium Park.",
+        phone: null,
+        email: null,
+        website: null
+      },
+      {
+        company: "Morgan Stanley Wealth Management",
+        alumni: "James Lamoree",
+        role: "Private Wealth Advisor",
+        industry: "Financial Services",
+        location: "Chicago, IL",
+        address: "227 W. Monroe St, Chicago, IL",
+        description: "Private wealth management and financial advisory services for individuals and families.",
+        phone: null,
+        email: null,
+        website: null
+      },
+      {
+        company: "New York Life Insurance and NYLIFE Securities",
+        alumni: "Mary Beth Velzy",
+        role: "Owner",
+        industry: "Financial Services",
+        location: "Chicago, IL",
+        address: "500 W. Madison St Suite 1725, Chicago, IL",
+        description: "Female-owned practice serving professionals and businesses with insurance and securities solutions.",
+        phone: "(312) 493-7216",
+        email: null,
+        website: null
+      },
+      {
+        company: "Renee Davis Consulting",
+        alumni: "Renee Davis",
+        role: "Owner/Founder",
+        industry: "Nonprofit Organization Management",
+        location: "Western Springs, IL",
+        address: "4310 Lawn Avenue, Western Springs, IL",
+        description: "Consulting and coaching for nonprofit leaders and fundraisers to maximize their impact.",
+        phone: "(312) 231-9712",
+        email: null,
+        website: null
+      },
+      {
+        company: "Ruggaard &amp; Associates, LLC",
+        alumni: "Ryan Ruggaard",
+        role: "Owner/Partner",
+        industry: "Investment Management",
+        location: "Chicago, IL",
+        address: "171 N Aberdeen St Suite 400, Chicago, IL",
+        description: "Registered investment advisor serving 300+ clients across 35 states. Contact Ryan at ryan@ruggaard.net or Randy at randy@ruggaard.net.",
+        phone: "(330) 487-5888",
+        email: null,
+        website: null
+      }
+    ];
+
+    // ─── Render ───────────────────────────────────────────────────────
+    const grid = document.getElementById('directoryGrid');
+    const searchInput = document.getElementById('searchInput');
+    const industryFilterBar = document.getElementById('industryFilters');
+    const totalCount = document.getElementById('totalCount');
+
+    // Collect unique industries
+    const allIndustries = [...new Set(businesses.map(b => b.industry))].sort();
+    allIndustries.forEach(ind => {
+      const btn = document.createElement('button');
+      btn.className = 'industry-btn';
+      btn.dataset.filter = ind;
+      btn.textContent = ind;
+      industryFilterBar.appendChild(btn);
+    });
+
+    let activeFilter = 'all';
+    let activeSearch = '';
+
+    function render() {
+      const filtered = businesses.filter(b => {
+        const matchIndustry = activeFilter === 'all' || b.industry === activeFilter;
+        if (!matchIndustry) return false;
+        if (!activeSearch) return true;
+        const q = activeSearch.toLowerCase();
+        return b.company.toLowerCase().includes(q) ||
+               b.alumni.toLowerCase().includes(q) ||
+               b.industry.toLowerCase().includes(q) ||
+               b.location.toLowerCase().includes(q) ||
+               b.description.toLowerCase().includes(q);
+      });
+
+      totalCount.textContent = businesses.length;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="no-results">
+          <h3>No businesses found</h3>
+          <p>Try adjusting your search or filter.</p>
+        </div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(b => `
+        <article class="business-card">
+          <div class="card-accent"></div>
+          <div class="card-body">
+            <h2 class="card-company">${b.company}</h2>
+            <div class="card-alumni">${b.alumni} — ${b.role}</div>
+            <div class="card-tags">
+              <span class="card-tag industry">${b.industry}</span>
+              <span class="card-tag location">${b.location}</span>
+            </div>
+            <p class="card-description">${b.description}</p>
+            <div class="card-contact">
+              <div class="contact-item">📍 ${b.address}</div>
+              ${b.phone ? `<div class="contact-item">📞 <a href="tel:${b.phone.replace(/[^0-9]/g, '')}">${b.phone}</a></div>` : ''}
+              ${b.email ? `<div class="contact-item">✉️ <a href="mailto:${b.email}">${b.email}</a></div>` : ''}
+              ${b.website ? `<div class="contact-item">🌐 <a href="${b.website}" target="_blank" rel="noopener">${b.website.replace(/^https?:\/\//, '')}</a></div>` : ''}
+            </div>
+          </div>
+        </article>
+      `).join('');
+    }
+
+    // ─── Event Listeners ──────────────────────────────────────────────
+    searchInput.addEventListener('input', e => {
+      activeSearch = e.target.value;
+      render();
+    });
+
+    industryFilterBar.addEventListener('click', e => {
+      const btn = e.target.closest('.industry-btn');
+      if (!btn) return;
+      industryFilterBar.querySelectorAll('.industry-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeFilter = btn.dataset.filter;
+      render();
+    });
+
+    // ─── Initial Render ───────────────────────────────────────────────
+    render();
+  </script>
+
+</body>
+</html>
