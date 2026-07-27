@@ -268,10 +268,16 @@
       btn.classList.add('active');
       activeFilter = btn.dataset.filter;
       render();
+      // Update the filter toggle badge
+      const badge = document.getElementById('filterBadge');
+      if (badge) badge.textContent = btn.textContent;
     });
 
     // ─── Initial Render ───────────────────────────────────────────────
     render();
+    // Set initial badge
+    const initBadge = document.getElementById('filterBadge');
+    if (initBadge) initBadge.textContent = document.querySelector('.industry-btn.active')?.textContent || 'All';
   
 function toggleFilters() {
   const container = document.getElementById('industryFilters');
