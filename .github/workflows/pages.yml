@@ -3,7 +3,6 @@ name: Deploy to GitHub Pages
 on:
   push:
     branches: ["main"]
-
   workflow_dispatch:
 
 permissions:
@@ -24,14 +23,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
+      
+      - name: Download gh
+        run: |
+          curl -sL "https://github.com/cli/cli/releases/download/v2.63.2/gh_2.63.2_linux_amd64.tar.gz" -o /tmp/gh.tar.gz
+          tar -xzf /tmp/gh.tar.gz -C /tmp/
+      
+      - name: Enable Pages via API
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          /tmp/gh_2.63.2_linux_amd64/bin/gh api --method POST repos/${{ github.repository }}/pages \
+            --field source[branch]=main --field source[path]='/' || echo "Create failed, trying update..."
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: '.'
+      
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
